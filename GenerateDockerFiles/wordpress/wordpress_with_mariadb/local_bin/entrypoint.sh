@@ -106,9 +106,9 @@ setup_wordpress(){
         rm  -rf $WORDPRESS_HOME/.git
        
         echo "INFO: Installing W3TC Plugin"
-        runuser -u www-data -- wp core install --url=localhost:80 --title="Zubair's Blog" --admin_user=zmohammed@microsoft.com --admin_password=Zubaeyr@123--admin_email=zmohammed@microsoft.com --path=$WORDPRESS_HOME
-        runuser -u www-data -- wp plugin install w3-total-cache --activate --path=$WORDPRESS_HOME
-        runuser -u www-data -- wp w3-total-cache import $WORDPRESS_SOURCE/w3tc-config.json --path=$WORDPRESS_HOME
+        sudo -u www-data wp core install --url=localhost:80 --title="Zubair's Blog" --admin_user=zmohammed@microsoft.com --admin_password=Zubaeyr@123--admin_email=zmohammed@microsoft.com --path=$WORDPRESS_HOME
+        sudo -u www-data wp plugin install w3-total-cache --activate --path=$WORDPRESS_HOME
+        sudo -u www-data wp w3-total-cache import $WORDPRESS_SOURCE/w3tc-config.json --path=$WORDPRESS_HOME
 
         
     else
