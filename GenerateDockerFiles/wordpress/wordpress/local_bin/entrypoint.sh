@@ -33,9 +33,14 @@ setup_wordpress(){
 	        git branch --track $GIT_BRANCH origin/$GIT_BRANCH && git checkout $GIT_BRANCH
 	    fi
 
-	#remove .git
+	    #remove .git
         rm  -rf $WORDPRESS_HOME/.git
         
+        echo "INFO: Installing W3TC Plugin"
+        wp core install --url=localhost:80 --title="Zubair's Blog" --admin_user=zmohammed@microsoft.com --admin_password=Zubaeyr@123--admin_email=zmohammed@microsoft.com --path=$WORDPRESS_HOME
+        wp plugin install w3-total-cache --activate --path=$WORDPRESS_HOME
+        wp w3-total-cache import $WORDPRESS_SOURCE/w3tc-config.json --path=$WORDPRESS_HOME
+
     else
         echo "INFO: Wordpress already exists, no need to GIT pull again."
     fi
