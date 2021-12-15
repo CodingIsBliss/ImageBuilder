@@ -37,9 +37,9 @@ setup_wordpress(){
         rm  -rf $WORDPRESS_HOME/.git
         
         echo "INFO: Installing W3TC Plugin"
-        su - nginx -c 'wp core install --url=localhost:80 --title="Azure WordPress Blog" --admin_user=zmohammed@microsoft.com --admin_password=Zubaeyr@123--admin_email=zmohammed@microsoft.com --path=$WORDPRESS_HOME'
-        su - nginx -c 'wp plugin install w3-total-cache --activate --path=$WORDPRESS_HOME'
-        su - nginx -c 'wp w3-total-cache import $WORDPRESS_SOURCE/w3tc-config.json --path=$WORDPRESS_HOME'
+        wp core install --url=localhost:80 --title="Azure WordPress Blog" --admin_user=zmohammed@microsoft.com --admin_password=Zubaeyr@123--admin_email=zmohammed@microsoft.com --path=$WORDPRESS_HOME --allow-root
+        wp plugin install w3-total-cache --activate --path=$WORDPRESS_HOME --allow-root
+        wp w3-total-cache import $WORDPRESS_SOURCE/w3tc-config.json --path=$WORDPRESS_HOME --allow-root
 
     else
         echo "INFO: Wordpress already exists, no need to GIT pull again."
