@@ -37,7 +37,7 @@ setup_wordpress(){
         rm  -rf $WORDPRESS_HOME/.git
         
         echo "INFO: Installing W3TC Plugin"
-        wp core install --url=$WEBSITE_HOSTNAME --title=$WORDPRESS_TITLE --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL --path=$WORDPRESS_HOME --allow-root
+        wp core install --url=$WEBSITE_HOSTNAME --title="${WORDPRESS_TITLE}" --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL --path=$WORDPRESS_HOME --allow-root
         echo "wordpress installed successfully...."
         wp plugin install w3-total-cache --activate --path=$WORDPRESS_HOME --allow-root
         echo "plugin activated successfully...."
