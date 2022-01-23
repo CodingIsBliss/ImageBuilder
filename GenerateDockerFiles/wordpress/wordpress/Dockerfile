@@ -255,6 +255,10 @@ RUN set -ex \
     && chown -R www-data:www-data $HOME_SITE \
     && echo "<?php phpinfo();" > $HOME_SITE/index.php \
 # -------------
+# Mysql Client
+# -------------
+    && apk add --no-cache mysql-client \
+# -------------
 # log rotate & supervisor
 # -------------
 	&& apk update \

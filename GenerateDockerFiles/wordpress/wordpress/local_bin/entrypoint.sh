@@ -93,7 +93,26 @@ setup_wordpress() {
         fi
     fi
 
-    if [ $(grep "GIT_PULL_COMPLETED" $WORDPRESS_LOCK_FILE) ] &&  [ ! $(grep "WP_INSTALLATION_COMPLETED" $WORDPRESS_LOCK_FILE) ]; then
+    #first time Database connection check
+    if [ $(grep "GIT_PULL_COMPLETED" $WORDPRESS_LOCK_FILE) ] &&  [ ! $(grep "DB_CONNECTION_ESTABLISHED" $WORDPRESS_LOCK_FILE) ]; then
+    	try_count=1
+	while [ $try_count -le 60 ]
+	do 
+	    db_status=`wp db check --allow-root|grep "Success: Database checked"|wc -l`
+	    if(( $db_status==1 ))
+	    then
+	    	echo "DB_CONNECTION_ESTABLISHED" >> $WORDPRESS_LOCK_FILE
+		echo "INFO: Database Connection Successful "            
+		break
+	    else            
+		echo "INFO: DB connection failed this time, Wait 5s, try again..."
+		sleep 10s	
+	    fi
+	    let try_count+=1
+	done
+    fi
+      
+    if [ $(grep "DB_CONNECTION_ESTABLISHED" $WORDPRESS_LOCK_FILE) ] &&  [ ! $(grep "WP_INSTALLATION_COMPLETED" $WORDPRESS_LOCK_FILE) ]; then
         if wp core install --url=$WEBSITE_HOSTNAME --title="${WORDPRESS_TITLE}" --admin_user=$WORDPRESS_ADMIN_USER --admin_password=$WORDPRESS_ADMIN_PASSWORD --admin_email=$WORDPRESS_ADMIN_EMAIL --skip-email --path=$WORDPRESS_HOME --allow-root; then
             echo "WP_INSTALLATION_COMPLETED" >> $WORDPRESS_LOCK_FILE
         fi
