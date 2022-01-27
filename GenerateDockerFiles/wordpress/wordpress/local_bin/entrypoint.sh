@@ -98,7 +98,7 @@ setup_wordpress() {
     	try_count=1
 	while [ $try_count -le 40 ]
 	do 
-	    db_status=`wp db check --allow-root|grep "Success: Database checked"|wc -l`
+	    db_status=`wp db check --allow-root --quick --ssl=true|grep "Success: Database checked"|wc -l`
 	    if(( $db_status==1 ))
 	    then
 		echo "INFO: Database Connection Successful "            
