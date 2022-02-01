@@ -46,6 +46,10 @@ COPY hostingstart.html /opt/defaultsite
 COPY hostingstart_dep.html /opt/defaultsite
 COPY application.py /opt/defaultsite
 
+# gunicorn custom config
+COPY gunicorn.conf.py /opt/startup
+ENV PYTHON_USE_GUNICORN_CONFIG_FROM_PATH "/opt/startup/gunicorn.conf.py"
+
 # configure startup
 RUN chmod -R 777 /opt/startup
 COPY entrypoint.py /usr/local/bin

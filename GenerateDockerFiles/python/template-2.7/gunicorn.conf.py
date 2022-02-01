@@ -1,6 +1,3 @@
-import constants
-import code_profiler_installer as cpi
-from pathlib import Path
 import logging
 import logging.handlers
 import threading
@@ -28,21 +25,6 @@ class appService_customQueueHandler(logging.handlers.QueueHandler) :
                 self.enqueue(self.prepare(record))
             except Exception:
                 self.handleError(record)
-
-try:
-    Path(constants.CODE_PROFILER_LOGS_DIR).mkdir(parents=True, exist_ok=True)
-    pidfile = constants.PID_FILE_LOCATION
-    
-except Exception as e:
-    print(f"Gunicorn was unable to set the pidfile path due to the exception : {e}")
-
-def post_worker_init(worker):
-    try:
-        profiler_installer = cpi.CodeProfilerInstaller()
-        profiler_installer.add_signal_handlers()              
-            
-    except Exception as e:
-        print(e)
 
 def on_starting(server):
     
